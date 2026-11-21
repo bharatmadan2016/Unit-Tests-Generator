@@ -6,7 +6,11 @@ import { errorHandler, notFoundHandler } from './src/middleware/errorHandler.js'
 import testRoutes from './src/routes/testRoutes.js';
 
 const app = express();
-app.use(cors({ origin: appConfig.clientOrigin }));
+app.use(cors({
+    origin: 'https://unit-tests-generator.vercel.app',
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type']
+}));
 app.use(express.json({ limit: '1mb' }));
 app.use('/api', testRoutes);
 app.use(notFoundHandler);
