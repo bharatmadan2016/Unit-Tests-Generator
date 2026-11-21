@@ -1,0 +1,3 @@
+import { useCallback, useState } from 'react';
+import { generateTests } from '../services/testApi.js';
+export function useTestGenerator() { const [result, setResult] = useState(null); const [loading, setLoading] = useState(false); const [error, setError] = useState(''); const generate = useCallback(async (code, language) => { if (!code.trim()) { setError('Please paste your source code before generating tests.'); return; } setError(''); setResult(null); setLoading(true); try { setResult(await generateTests({ code: code.trim(), language })); } catch (requestError) { setError(requestError.message); } finally { setLoading(false); } }, []); return { result, loading, error, generate }; }

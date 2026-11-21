@@ -1,0 +1,5 @@
+import { appConfig } from '../config/appConfig.js';
+import { LANGUAGE_FRAMEWORKS, generateTests } from '../services/testGenerationService.js';
+import { AppError } from '../utils/appError.js';
+export async function generateTestsController(req, res, next) { try { const { code, language } = req.body || {}; if (typeof code !== 'string' || !code.trim()) throw new AppError('Please provide source code to generate tests for.', 400, 'INVALID_CODE'); if (!LANGUAGE_FRAMEWORKS[language]) throw new AppError('Please select a valid programming language.', 400, 'INVALID_LANGUAGE'); if (code.trim().length > appConfig.maxCodeLength) throw new AppError(`Code is too long. Please keep it under ${appConfig.maxCodeLength.toLocaleString()} characters.`, 400, 'CODE_TOO_LONG'); const tests = await generateTests(code.trim(), language); res.json({ tests, language }); } catch (error) { next(error); } }
+export function healthController(_req, res) { res.json({ status: 'ok', apiKeyConfigured: appConfig.hasApiKey }); }

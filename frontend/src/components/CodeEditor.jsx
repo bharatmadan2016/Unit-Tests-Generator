@@ -1,0 +1,4 @@
+export default function CodeEditor({ code, onChange, label, maxChars }) {
+  const lineCount = Math.max(1, code.split('\n').length);
+  return <div className="card editor-card"><div className="card-header"><div className="card-header-left"><span className="window-dots"><i /><i /><i /></span><span className="card-title">Source Code</span></div><span className={`char-counter ${code.length > maxChars * 0.8 ? 'warn' : ''}`}>{code.length.toLocaleString()} / {maxChars.toLocaleString()} chars</span></div><div className="editor-shell"><div className="line-numbers" aria-hidden="true">{Array.from({ length: lineCount }, (_, index) => <span key={index}>{index + 1}</span>)}</div><textarea id="code-input" className="code-textarea" value={code} onChange={event => onChange(event.target.value)} placeholder={`Paste your ${label} code here…\n\nExample:\ndef add(a, b):\n    return a + b`} spellCheck={false} aria-label="Source code input" /></div></div>;
+}

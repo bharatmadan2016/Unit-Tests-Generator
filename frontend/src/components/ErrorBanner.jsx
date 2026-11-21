@@ -1,0 +1,1 @@
+export default function ErrorBanner({ message }) { return message ? <div className="error-banner" role="alert"><span className="error-icon">⚠️</span><span className="error-text">{message}</span></div> : null; }
